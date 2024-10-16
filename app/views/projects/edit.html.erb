@@ -1,0 +1,24 @@
+<h1>New Project</h1>
+
+<%= form_with(model: @project, local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control', rows: 5 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :status %>
+    <%= form.text_field :status, class: 'form-control' %>
+    <!-- Alternatively, use a select dropdown for predefined statuses -->
+    <!--
+    <%= form.select :status, ['New', 'In Progress', 'Completed', 'On Hold'], {}, class: 'form-control' %>
+    -->
+  </div>
+
+  <%= form.submit 'Create Project', class: 'btn btn-primary' %>
+<% end %>

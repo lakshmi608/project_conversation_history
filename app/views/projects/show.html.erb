@@ -1,0 +1,47 @@
+<h1><%= @project.name %></h1>
+<p><%= @project.description %></p>
+<p>Status: <%= @project.status %></p>
+
+<hr>
+
+<h2>Conversation History</h2>
+<div>
+  <% @activities.each do |activity| %>
+    <div class="activity">
+      <% if activity.is_a?(Comment) %>
+        <p><strong>Comment by <%= activity.user.name %>:</strong> <%= activity.content %></p>
+        <small><%= activity.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+      <% elsif activity.is_a?(StatusChange) %>
+        <p><strong>Status changed by <%= activity.user.name %>:</strong> <%= activity.previous_status %> → <%= activity.new_status %></p>
+        <small><%= activity.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+      <% end %>
+      <hr>
+    </div>
+  <% end %>
+</div>
+
+<hr>
+
+<h2>Add a Comment</h2>
+<%= form_with(model: [@project, Comment.new], local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :content %>
+    <%= form.text_area :content, class: 'form-control', rows: 3 %>
+  </div>
+  <%= form.submit 'Add Comment', class: 'btn btn-primary' %>
+<% end %>
+
+<hr>
+
+<h2>Change Status</h2>
+<%= form_with(model: [@project, StatusChange.new], local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :new_status %>
+    <%= form.text_field :new_status, class: 'form-control' %>
+    <!-- Alternatively, use a select dropdown for predefined statuses -->
+    <!--
+    <%= form.select :new_status, ['New', 'In Progress', 'Completed', 'On Hold'], {}, class: 'form-control' %>
+    -->
+  </div>
+  <%= form.submit 'Change Status', class: 'btn btn-secondary' %>
+<% end %>
