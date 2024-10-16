@@ -1,6 +1,9 @@
 class CommentsController < ApplicationController
   before_action :set_project
 
+  def new
+    @comment = @project.comments.new
+  end
   def create
     @comment = @project.comments.build(comment_params)
     @comment.user = current_user

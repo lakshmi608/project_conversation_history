@@ -1,0 +1,27 @@
+// app/assets/stylesheets/custom.css.scss
+
+@import "bootstrap";
+
+/* Custom styles */
+body {
+  background-color: #f8f9fa; /* Light gray background */
+}
+
+.table {
+  border: 1px solid #dee2e6; /* Custom border for tables */
+}
+
+.table th {
+  background-color: #007bff; /* Blue header */
+  color: white;
+}
+
+.btn-custom {
+  background-color: #28a745; /* Green button */
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Red button for delete */
+  color: white;
+}

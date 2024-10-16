@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update]
+  before_action :set_project, only: [:show, :edit, :update, :change_status]
 
   def index
     @projects = Project.all
@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
     @status_changes = @project.status_changes.includes(:user).order(created_at: :asc)
     # Combine and sort activities if using a unified activity feed
     @activities = (@comments + @status_changes).sort_by(&:created_at)
+    @activity = Activity.new # Initialize a new Activity for form use
   end
 
   def new
@@ -36,6 +37,23 @@ class ProjectsController < ApplicationController
       redirect_to @project, notice: 'Project was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  # New action to handle status change
+  def change_status
+    previous_status = @project.status
+    if @project.update(status: params[:status])
+      # Create an activity log for the status change
+      Activity.create(
+        user: current_user,
+        project: @project,
+        previous_status: previous_status,
+        new_status: @project.status
+      )
+      redirect_to @project, notice: 'Project status was successfully updated.'
+    else
+      redirect_to @project, alert: 'Failed to update project status.'
     end
   end
 

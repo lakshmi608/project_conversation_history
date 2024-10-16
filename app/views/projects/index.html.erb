@@ -1,9 +1,11 @@
 <h1>Projects</h1>
 
-<%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
+<div class="d-flex justify-content-end mb-3">
+  <%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
+</div>
 
-<table class="table">
-  <thead>
+<table class="table table-bordered">
+  <thead class="thead-light">
     <tr>
       <th>Name</th>
       <th>Status</th>
